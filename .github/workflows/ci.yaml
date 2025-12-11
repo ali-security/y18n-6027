@@ -3,17 +3,20 @@ on:
   push:
     branches:
       - master
+      - main
   pull_request:
-    types: [ assigned, opened, synchronize, reopened, labeled ]
+    types: [assigned, opened, synchronize, reopened, labeled]
 env:
   CI: true
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         node: [10.x, 12.x, 14.x]
     steps:
+      - name: Configure npm time machine registry
+        run: npm config set registry https://:2020-09-05T23%3A57%3A59.585Z@time-machines-npm.sealsecurity.io/
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
@@ -22,36 +25,44 @@ jobs:
       - run: npm install
       - run: npm test
   windows:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
+      - name: Configure npm time machine registry
+        run: npm config set registry https://:2020-09-05T23%3A57%3A59.585Z@time-machines-npm.sealsecurity.io/
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: 12.x
       - run: npm install
       - run: npm test
   coverage:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
+      - name: Configure npm time machine registry
+        run: npm config set registry https://:2020-09-05T23%3A57%3A59.585Z@time-machines-npm.sealsecurity.io/
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
+          node-version: 14.x
       - run: npm install
       - run: npm test
       - run: npm run coverage
   esm:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
+      - name: Configure npm time machine registry
+        run: npm config set registry https://:2020-09-05T23%3A57%3A59.585Z@time-machines-npm.sealsecurity.io/
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
+          node-version: 14.x
       - run: npm install
       - run: npm run test:esm
   deno:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
+      - name: Configure npm time machine registry
+        run: npm config set registry https://:2020-09-05T23%3A57%3A59.585Z@time-machines-npm.sealsecurity.io/
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
